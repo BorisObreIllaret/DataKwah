@@ -6,10 +6,17 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.6" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DataKwah.Domain.Configurations\DataKwah.Domain.Configurations.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Database\DataKwah.sqlite">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
