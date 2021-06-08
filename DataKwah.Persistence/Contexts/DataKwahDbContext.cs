@@ -15,6 +15,10 @@ namespace DataKwah.Persistence.Contexts
         {
         }
 
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductState> ProductStates { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -30,9 +34,5 @@ namespace DataKwah.Persistence.Contexts
             base.OnModelCreating(builder);
             builder.AddDomainConfigurations();
         }
-
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductState> ProductStates { get; set; }
-        public DbSet<Review> Reviews { get; set; }
     }
 }

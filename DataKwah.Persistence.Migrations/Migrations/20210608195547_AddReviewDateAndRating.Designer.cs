@@ -3,14 +3,16 @@ using System;
 using DataKwah.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataKwah.Persistence.Migrations.Migrations
 {
     [DbContext(typeof(DataKwahDbContext))]
-    partial class DataKwahDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210608195547_AddReviewDateAndRating")]
+    partial class AddReviewDateAndRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

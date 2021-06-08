@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 
 namespace DataKwah.Api.Middlewares
 {
@@ -18,10 +15,7 @@ namespace DataKwah.Api.Middlewares
         {
             HandleException(context);
 
-            if (context.ExceptionHandled == false)
-            {
-                base.OnException(context);
-            }
+            if (context.ExceptionHandled == false) base.OnException(context);
         }
 
         private void HandleException(ExceptionContext context)

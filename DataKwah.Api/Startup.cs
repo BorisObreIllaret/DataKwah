@@ -1,7 +1,11 @@
+using System.IO;
+using System.Reflection;
 using DataKwah.Api.Middlewares;
 using DataKwah.Application.Commands;
 using DataKwah.Application.Queries;
+using DataKwah.Application.Services;
 using DataKwah.Persistence;
+using DataKwah.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +31,10 @@ namespace DataKwah.Api
             services.ConfigureApi();
             services.ConfigureApplicationCommands();
             services.ConfigureApplicationQueries();
+            services.ConfigureApplicationServices();
             services.ConfigurePersistenceDbContexts(Configuration.GetConnectionString("db"));
+            services.ConfigurePersistenceRepositories();
+            // services.ConfigurePersistenceDbContexts(BuildConnectionString());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +52,13 @@ namespace DataKwah.Api
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private string BuildConnectionString()
+        {
+            var binPath = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty;
+            var dbFilePath = Configuration.GetConnectionString("sqlite-file");
+            return $"Data Source={Path.Combine(binPath, dbFilePath)}";
         }
     }
 }

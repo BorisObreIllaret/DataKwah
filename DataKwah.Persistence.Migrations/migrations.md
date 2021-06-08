@@ -14,3 +14,5 @@
 
 ## Migrations list
 - `dotnet ef migrations add InitialSetup -s ..\DataKwah.Api -p .\DataKwah.Persistence.Migrations.csproj`
+- `dotnet ef migrations add AddProductStateReason -s ..\DataKwah.Api -p .\DataKwah.Persistence.Migrations.csproj`
+- `dotnet ef migrations add AddReviewDateAndRating -s ..\DataKwah.Api -p .\DataKwah.Persistence.Migrations.csproj`

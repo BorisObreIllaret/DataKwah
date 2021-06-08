@@ -8,9 +8,15 @@ namespace DataKwah.Domain.Entities
         public int Id { get; set; }
         public byte StateId { get; set; }
         public DateTime? StateDate { get; set; }
+        public string Reason { get; set; }
 
         public virtual Product Product { get; set; }
 
-        [NotMapped] public ProductIndexationState State => (ProductIndexationState)StateId;
+        [NotMapped]
+        public ProductIndexationState State
+        {
+            get => (ProductIndexationState)StateId;
+            set => StateId = (byte)value;
+        }
     }
 }

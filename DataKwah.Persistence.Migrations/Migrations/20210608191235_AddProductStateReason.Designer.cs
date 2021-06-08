@@ -3,14 +3,16 @@ using System;
 using DataKwah.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataKwah.Persistence.Migrations.Migrations
 {
     [DbContext(typeof(DataKwahDbContext))]
-    partial class DataKwahDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210608191235_AddProductStateReason")]
+    partial class AddProductStateReason
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,14 +69,11 @@ namespace DataKwah.Persistence.Migrations.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<byte?>("Rating")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ProfileName")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");

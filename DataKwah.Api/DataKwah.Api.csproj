@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\DataKwah.Api.Controllers\DataKwah.Api.Controllers.csproj" />
       <ProjectReference Include="..\DataKwah.Api.Middlewares\DataKwah.Api.Middlewares.csproj" />
+      <ProjectReference Include="..\DataKwah.Application.Services\DataKwah.Application.Services.csproj"/>
       <ProjectReference Include="..\DataKwah.Persistence.Migrations\DataKwah.Persistence.Migrations.csproj" />
       <ProjectReference Include="..\DataKwah.Persistence.Repositories\DataKwah.Persistence.Repositories.csproj" />
     </ItemGroup>

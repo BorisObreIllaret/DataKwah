@@ -7,7 +7,7 @@ namespace DataKwah.Persistence
     public static class MainModule
     {
         /// <summary>
-        /// Configure Entity Framework Core DbContexts.
+        ///     Configure Entity Framework Core DbContexts.
         /// </summary>
         /// <param name="services">Services.</param>
         /// <param name="connectionString">Database connexion string.</param>

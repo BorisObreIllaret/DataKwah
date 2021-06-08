@@ -9,16 +9,10 @@ namespace DataKwah.Api.Middlewares
         public static IServiceCollection ConfigureApi(this IServiceCollection services)
         {
             services
-                .AddControllers(options =>
-            {
-                options.Filters.Add(new ApplicationExceptionFilterAttribute());
-            })
+                .AddControllers(options => { options.Filters.Add(new ApplicationExceptionFilterAttribute()); })
                 .AddNewtonsoftJson();
 
-            services.PostConfigure<MvcNewtonsoftJsonOptions>(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
+            services.PostConfigure<MvcNewtonsoftJsonOptions>(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
             return services;
         }
