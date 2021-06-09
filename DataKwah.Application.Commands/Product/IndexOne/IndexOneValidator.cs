@@ -1,6 +1,12 @@
-﻿namespace DataKwah.Application.Commands.Product.IndexOne
+﻿using FluentValidation;
+
+namespace DataKwah.Application.Commands.Product.IndexOne
 {
-    public class IndexOneValidator
+    public class IndexOneValidator : AbstractValidator<IndexOneRequest>
     {
+        public IndexOneValidator()
+        {
+            RuleFor(req => req.Asin).NotEmpty();
+        }
     }
 }

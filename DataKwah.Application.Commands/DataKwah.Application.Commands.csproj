@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\DataKwah.Application.Services\DataKwah.Application.Services.csproj"/>
+        <ProjectReference Include="..\DataKwah.Persistence.Repositories\DataKwah.Persistence.Repositories.csproj"/>
     </ItemGroup>
 
 </Project>

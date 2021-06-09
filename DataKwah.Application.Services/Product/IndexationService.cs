@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using DataKwah.Domain.Entities;
-using DataKwah.Persistence.Repositories.Product;
 using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 
@@ -14,22 +13,11 @@ namespace DataKwah.Application.Services.Product
 {
     public class IndexationService : IIndexationService
     {
-        public IndexationService(IProductRepository productRepository)
+        public async Task IndexAsin(string asin, Domain.Entities.Product product, CancellationToken cancellationToken = default)
         {
-            ProductRepository = productRepository;
-        }
+            if (string.IsNullOrWhiteSpace(asin)) throw new ArgumentNullException(nameof(asin));
 
-        private IProductRepository ProductRepository { get; }
-
-        public async Task IndexAsin(string asin, CancellationToken cancellationToken)
-        {
-            if (string.IsNullOrWhiteSpace(asin)) return;
-
-            var product = new Domain.Entities.Product
-            {
-                Asin = asin,
-                ProductState = new ProductState()
-            };
+            if (product == null) product = new Domain.Entities.Product();
 
             HtmlDocument document;
 
@@ -42,7 +30,6 @@ namespace DataKwah.Application.Services.Product
                 product.ProductState.State = ProductIndexationState.Failed;
                 product.ProductState.StateDate = DateTime.UtcNow;
                 product.ProductState.Reason = "Page loading failed";
-                await ProductRepository.Add(product, cancellationToken);
                 return;
             }
 
@@ -51,7 +38,6 @@ namespace DataKwah.Application.Services.Product
                 product.ProductState.State = ProductIndexationState.Failed;
                 product.ProductState.StateDate = DateTime.UtcNow;
                 product.ProductState.Reason = "Product not found";
-                await ProductRepository.Add(product, cancellationToken);
                 return;
             }
 
@@ -64,7 +50,6 @@ namespace DataKwah.Application.Services.Product
                 product.ProductState.State = ProductIndexationState.Failed;
                 product.ProductState.StateDate = DateTime.UtcNow;
                 product.ProductState.Reason = "No review found";
-                await ProductRepository.Add(product, cancellationToken);
                 return;
             }
 
@@ -87,7 +72,6 @@ namespace DataKwah.Application.Services.Product
             product.ProductState.State = ProductIndexationState.Done;
             product.ProductState.StateDate = DateTime.UtcNow;
             product.ProductState.Reason = string.Empty;
-            await ProductRepository.Add(product, cancellationToken);
         }
 
         private static async Task<HtmlDocument> LoadDocument(string asin, CancellationToken cancellationToken)

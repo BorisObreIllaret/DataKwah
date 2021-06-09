@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DataKwah.Persistence.Repositories\DataKwah.Persistence.Repositories.csproj"/>
+        <ProjectReference Include="..\DataKwah.Domain.Entities\DataKwah.Domain.Entities.csproj"/>
     </ItemGroup>
 
 </Project>
