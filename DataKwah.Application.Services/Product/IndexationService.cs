@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -53,20 +52,24 @@ namespace DataKwah.Application.Services.Product
                 return;
             }
 
-            product.Reviews = new List<Review>();
-
             foreach (var reviewNode in reviewsNode.Descendants("div").Where(node => FilterByAttribute(node, "data-hook", "review")))
             {
-                var review = new Review
-                {
-                    Asin = reviewNode.Id,
-                    Body = GetReviewBody(reviewNode),
-                    Date = GetReviewDate(reviewNode),
-                    Rating = GetReviewRating(reviewNode),
-                    Title = GetReviewTitle(reviewNode)
-                };
+                var review = product.Reviews.FirstOrDefault(r => r.Asin == reviewNode.Id);
 
-                product.Reviews.Add(review);
+                if (review == default)
+                {
+                    review = new Review
+                    {
+                        Asin = reviewNode.Id
+                    };
+
+                    product.Reviews.Add(review);
+                }
+
+                review.Body = GetReviewBody(reviewNode);
+                review.Date = GetReviewDate(reviewNode);
+                review.Rating = GetReviewRating(reviewNode);
+                review.Title = GetReviewTitle(reviewNode);
             }
 
             product.ProductState.State = ProductIndexationState.Done;

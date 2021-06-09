@@ -13,10 +13,4 @@
       <ProjectReference Include="..\DataKwah.Domain.Configurations\DataKwah.Domain.Configurations.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="Database\DataKwah.sqlite">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
 </Project>

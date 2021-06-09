@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using DataKwah.Application.Services.Product;
@@ -34,7 +35,8 @@ namespace DataKwah.Application.Commands.Product.IndexOne
                 product = new Domain.Entities.Product
                 {
                     Asin = request.Asin,
-                    ProductState = new ProductState()
+                    ProductState = new ProductState(),
+                    Reviews = new List<Review>()
                 };
 
                 await ProductRepository.Add(product, cancellationToken);
