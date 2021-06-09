@@ -21,7 +21,7 @@ namespace DataKwah.Application.Commands.Product.IndexOne
         private IProductRepository ProductRepository { get; }
         private IMapper Mapper { get; }
 
-        public async Task<IndexOneResponse> Handle(IndexOneRequest request, CancellationToken cancellationToken)
+        public async Task<IndexOneResponse> Handle(IndexOneRequest request, CancellationToken cancellationToken = default)
         {
             Domain.Entities.Product product;
 
