@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,5 +13,6 @@ namespace DataKwah.Persistence.Repositories.Product
         Task<bool> IsAnyProductById(int id, CancellationToken cancellationToken = default);
         Task<bool> IsAnyProductByAsin(string asin, CancellationToken cancellationToken = default);
         Task SaveChanges(CancellationToken cancellationToken = default);
+        Task<Tuple<List<Domain.Entities.Product>, int>> FilterProducts(ProductQueryObject queryObject, CancellationToken cancellationToken = default);
     }
 }

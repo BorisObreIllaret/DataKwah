@@ -5,9 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-      <PackageReference Include="FluentValidation.AspNetCore" Version="10.2.3" />
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1"/>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="10.2.3"/>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\DataKwah.Core.Filter\DataKwah.Core.Filter.csproj"/>
+        <ProjectReference Include="..\DataKwah.Persistence.Repositories\DataKwah.Persistence.Repositories.csproj"/>
     </ItemGroup>
 
 </Project>

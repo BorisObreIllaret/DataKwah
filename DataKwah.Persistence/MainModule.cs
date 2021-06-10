@@ -14,11 +14,7 @@ namespace DataKwah.Persistence
         /// <returns>Services.</returns>
         public static IServiceCollection ConfigurePersistenceDbContexts(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<DataKwahDbContext>(options =>
-            {
-                options.UseLazyLoadingProxies();
-                options.UseSqlite(connectionString, builder => builder.MigrationsAssembly("DataKwah.Persistence.Migrations"));
-            });
+            services.AddDbContext<DataKwahDbContext>(options => { options.UseSqlite(connectionString, builder => builder.MigrationsAssembly("DataKwah.Persistence.Migrations")); });
 
             return services;
         }
