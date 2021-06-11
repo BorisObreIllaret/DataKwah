@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  overflow: hidden;
+}
+
+header, footer {
+  height: 3rem;
+  width: 100vw;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--primary-color-text);
+  background-color: var(--indigo-900);
+  box-sizing: border-box;
+
+  nav, span {
+    margin: auto 1rem;
+  }
+}
+
+a {
+  text-decoration: none;
+
+  &:visited {
+    color: var(--primary-color-text);
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+main {
+  padding: 2rem;
+  overflow-y: auto;
+}

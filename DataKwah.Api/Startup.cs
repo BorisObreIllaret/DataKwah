@@ -3,7 +3,6 @@ using DataKwah.Application.Commands;
 using DataKwah.Application.Queries;
 using DataKwah.Application.Services;
 using DataKwah.Persistence;
-using DataKwah.Persistence.Contexts;
 using DataKwah.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,10 +32,11 @@ namespace DataKwah.Api
             services.ConfigureApplicationServices();
             services.ConfigurePersistenceDbContexts(Configuration.GetConnectionString("sqlite"));
             services.ConfigurePersistenceRepositories();
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataKwahDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -45,9 +45,10 @@ namespace DataKwah.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DataKwah.Api v1"));
             }
 
-            //dbContext.Database.Migrate();
-
             app.UseHttpsRedirection();
+
+            if (!env.IsDevelopment()) app.UseSpaStaticFiles();
+
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
             app.UseAuthorization();
