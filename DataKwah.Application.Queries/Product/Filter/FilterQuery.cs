@@ -23,6 +23,7 @@ namespace DataKwah.Application.Queries.Product.Filter
         {
             var queryObject = Mapper.Map<ProductQueryObject>(request);
             queryObject.IncludeReviews = true;
+            queryObject.IncludeState = true;
             var (products, count) = await ProductRepository.FilterProducts(queryObject, cancellationToken);
 
             return new FilterResponse

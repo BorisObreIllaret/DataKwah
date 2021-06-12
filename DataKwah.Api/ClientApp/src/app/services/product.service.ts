@@ -17,17 +17,33 @@ export class ProductService {
 
   filterProducts(request: ProductFilterRequest): Observable<ProductFilterResponse> {
     const params = this.buildQueryStringParams(request);
+    console.log('filterProducts', params);
     return this.http.get<ProductFilterResponse>(`${this.basePath}/filter`, {params});
   }
 
   private buildQueryStringParams(request: IFilterRequest): HttpParams {
-    const params = new HttpParams();
-    if (!request) return params;
-    request.page && params.append('page', request.page);
-    request.limit && params.append('limit', request.limit);
-    request.sort && params.append('sort', request.sort);
-    request.ascendingOrder && params.append('ascendingOrder', request.ascendingOrder);
-    request.search && params.append('search', request.search);
+    if (!request) return new HttpParams();
+    let params = new HttpParams();
+    console.log('buildQueryStringParams', request);
+    if (request.page !== null && request.page !== undefined) {
+      params = params.set('page', request.page);
+    }
+
+    if (request.limit) {
+      params = params.set('limit', request.limit);
+    }
+
+    if (request.sort) {
+      params = params.set('sort', request.sort);
+    }
+
+    if (request.ascendingOrder) {
+      params = params.set('ascendingOrder', request.ascendingOrder);
+    }
+
+    if (request.search) {
+      params = params.set('search', request.search);
+    }
     return params;
   }
 }

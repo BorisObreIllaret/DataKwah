@@ -152,9 +152,8 @@ namespace DataKwah.Application.Services.Product
             if (splitDateAndLocation.Length < 1) return null;
 
             var dateString = splitDateAndLocation[1];
-            DateTime date;
 
-            if (DateTime.TryParse(dateString, out date)) return date;
+            if (DateTime.TryParse(dateString, out var date)) return date;
 
             return null;
         }

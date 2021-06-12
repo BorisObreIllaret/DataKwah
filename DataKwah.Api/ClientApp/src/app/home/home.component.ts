@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../services/product.service';
-import {Observable} from 'rxjs';
 import {ProductFilterResponseData} from '../models/product-filter-response.model';
 import {ProductFilterRequest} from '../models/product-filter-request.model';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'kwah-home',
@@ -12,15 +10,37 @@ import {map} from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
-  products$ = new Observable<ProductFilterResponseData[]>();
+  products: ProductFilterResponseData[] = [];
+  count: number = 0;
+  first = 0;
+  rows = 10;
+  loading = true;
 
   constructor(private productService: ProductService) {
   }
 
   ngOnInit(): void {
-    this.products$ = this.productService.filterProducts(new ProductFilterRequest()).pipe(
-      map(response => response.items)
-    );
+    this.filterProducts(0, this.rows, '', true, '');
   }
 
+  loadProducts(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.filterProducts(event.first / event.rows, event.rows, event.sortField, !!event.sortOrder, '');
+  }
+
+  private filterProducts(page: number, limit: number, sort: string, ascendingOrder: boolean, search: string): void {
+    this.loading = true;
+    this.productService.filterProducts(new ProductFilterRequest({
+      page,
+      limit,
+      sort,
+      ascendingOrder,
+      search,
+    })).subscribe(response => {
+      this.products = response.items;
+      this.count = response.count;
+      this.loading = false;
+    })
+  }
 }

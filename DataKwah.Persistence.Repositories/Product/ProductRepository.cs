@@ -67,6 +67,7 @@ namespace DataKwah.Persistence.Repositories.Product
 
             // Includes
             if (queryObject.IncludeReviews) query = query.Include(product => product.Reviews);
+            if (queryObject.IncludeState) query = query.Include(product => product.ProductState);
 
             // Filters
             if (!string.IsNullOrWhiteSpace(queryObject.Search)) query = query.Where(product => product.Label.Contains(queryObject.Search.Trim()));
