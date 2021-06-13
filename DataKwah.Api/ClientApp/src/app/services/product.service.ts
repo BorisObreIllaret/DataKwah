@@ -5,6 +5,10 @@ import {environment} from '../../environments/environment';
 import {ProductFilterRequest} from '../models/product-filter-request.model';
 import {ProductFilterResponse} from '../models/product-filter-response.model';
 import {IFilterRequest} from '../models/i-filter-request.model';
+import {IndexOneProductRequest} from '../models/index-one-product-request.model';
+import {IndexOneProductResponse} from '../models/index-one-product-response.model';
+import {IndexManyProductsRequest} from '../models/index-many-products-request.model';
+import {IndexManyProductsResponse} from '../models/index-many-products-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +21,20 @@ export class ProductService {
 
   filterProducts(request: ProductFilterRequest): Observable<ProductFilterResponse> {
     const params = this.buildQueryStringParams(request);
-    console.log('filterProducts', params);
     return this.http.get<ProductFilterResponse>(`${this.basePath}/filter`, {params});
+  }
+
+  addProduct(request: IndexOneProductRequest): Observable<IndexOneProductResponse>  {
+    return this.http.post<IndexOneProductResponse>(`${this.basePath}/index-one`, request);
+  }
+
+  addProducts(request: IndexManyProductsRequest): Observable<IndexManyProductsResponse> {
+    return this.http.post<IndexManyProductsResponse>(`${this.basePath}/index-many`, request);
   }
 
   private buildQueryStringParams(request: IFilterRequest): HttpParams {
     if (!request) return new HttpParams();
     let params = new HttpParams();
-    console.log('buildQueryStringParams', request);
     if (request.page !== null && request.page !== undefined) {
       params = params.set('page', request.page);
     }

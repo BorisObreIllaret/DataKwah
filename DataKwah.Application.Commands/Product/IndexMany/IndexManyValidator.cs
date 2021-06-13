@@ -7,6 +7,7 @@ namespace DataKwah.Application.Commands.Product.IndexMany
         public IndexManyValidator()
         {
             RuleFor(req => req.Asins).NotEmpty();
+            RuleForEach(req => req.Asins).NotEmpty();
         }
     }
 }

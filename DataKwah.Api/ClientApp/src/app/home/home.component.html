@@ -1,28 +1,56 @@
-<p-table [value]="products"
-         [lazy]="true"
-         (onLazyLoad)="loadProducts($event)"
-         [loading]="loading"
-         [paginator]="true"
-         [showCurrentPageReport]="true"
-         [(first)]="first"
-         [rows]="rows"
-         [totalRecords]="count"
-         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-         [rowsPerPageOptions]="[5,10,25,50]"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <td>ASIN</td>
-      <td>Label</td>
-      <td>Indexation State</td>
-    </tr>
+<h1>List of indexed products</h1>
+<div class="card">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <form #asinForm="ngForm">
+        <input type="text" name="newAsin" pInputText placeholder="Enter an ASIN" [(ngModel)]="newASIN">
+        <button pButton type="button" icon="pi pi-plus" (click)="addNew()"></button>
+        <button pButton pRipple label="Add ASINs" icon="pi pi-plus" class="p-mr-2 ml-1" (click)="openDialog()"></button>
+      </form>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table [value]="products"
+           [lazy]="true"
+           (onLazyLoad)="loadProducts($event)"
+           [loading]="loading"
+           [paginator]="true"
+           [showCurrentPageReport]="true"
+           [(first)]="first"
+           [rows]="rows"
+           [totalRecords]="count"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [rowsPerPageOptions]="[5,10,25,50]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="asin">ASIN</th>
+        <th pSortableColumn="label">Label</th>
+        <th pSortableColumn="state">Indexation State</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.asin }}</td>
+        <td>{{ product.label }}</td>
+        <td [innerHTML]="product.state | toStateIcon"></td>
+        <td>
+          <button pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success p-mr-2"
+                  (click)="viewDetail(product)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<p-dialog header="Add ASINs" [(visible)]="dialogVisible">
+  <form #asinsForm="ngForm" class="asins-form">
+    <div *ngFor="let item of newASINs; let i = index; let isLast = last">
+      <input type="text" [name]="'newAsin' + i" pInputText placeholder="Enter an ASIN" [(ngModel)]="item.asin">
+      <button pButton type="button" icon="pi pi-plus" (click)="addNewAsinInList()" *ngIf="isLast"></button>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
   </ng-template>
-  <ng-template pTemplate="body" let-product>
-    <tr>
-      <td>{{ product.asin }}</td>
-      <td>{{ product.label }}</td>
-      <td [innerHTML]="product.state | toStateIcon"></td>
-    </tr>
-  </ng-template>
-</p-table>
-<div style="margin: 5rem 0"></div>
+</p-dialog>
