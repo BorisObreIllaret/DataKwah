@@ -32,7 +32,7 @@ namespace DataKwah.Api
             services.ConfigureApplicationServices();
             services.ConfigurePersistenceDbContexts(Configuration.GetConnectionString("sqlite"));
             services.ConfigurePersistenceRepositories();
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist/ClientApp"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,13 +46,13 @@ namespace DataKwah.Api
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             if (!env.IsDevelopment()) app.UseSpaStaticFiles();
-
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseSpa(spa => { spa.Options.SourcePath = "ClientApp"; });
         }
     }
 }
