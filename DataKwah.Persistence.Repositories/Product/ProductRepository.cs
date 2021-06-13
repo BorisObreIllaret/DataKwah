@@ -42,8 +42,8 @@ namespace DataKwah.Persistence.Repositories.Product
 
         public async Task<Tuple<List<Domain.Entities.Product>, int>> FilterProducts(ProductQueryObject queryObject, CancellationToken cancellationToken = default)
         {
-            var count = await ApplyFilter(queryObject, true).CountAsync();
-            var items = await ApplyFilter(queryObject).ToListAsync();
+            var count = await ApplyFilter(queryObject, true).CountAsync(cancellationToken);
+            var items = await ApplyFilter(queryObject).ToListAsync(cancellationToken);
             return new Tuple<List<Domain.Entities.Product>, int>(items, count);
         }
 
@@ -70,7 +70,11 @@ namespace DataKwah.Persistence.Repositories.Product
             if (queryObject.IncludeState) query = query.Include(product => product.ProductState);
 
             // Filters
-            if (!string.IsNullOrWhiteSpace(queryObject.Search)) query = query.Where(product => product.Label.Contains(queryObject.Search.Trim()));
+            if (!string.IsNullOrWhiteSpace(queryObject.Search))
+            {
+                var search = queryObject.Search.Trim().ToUpper();
+                query = query.Where(product => product.Label.ToUpper().Contains(search) || product.Asin.ToUpper().Contains(search));
+            }
 
             if (!ignoreSkipAndTake)
             {

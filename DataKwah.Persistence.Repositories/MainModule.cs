@@ -8,6 +8,7 @@ namespace DataKwah.Persistence.Repositories
         public static IServiceCollection ConfigurePersistenceRepositories(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
             return services;
         }
     }

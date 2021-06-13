@@ -2,10 +2,10 @@
 
 namespace DataKwah.Persistence.Repositories.Product
 {
-    public class ProductQueryObject : IFilterRequest
+    public class ReviewQueryObject : IFilterRequest
     {
-        public bool IncludeReviews { get; set; }
-        public bool IncludeState { get; set; }
+        public int? ProductId { get; set; }
+        public bool IncludeProduct { get; set; }
         public bool UseWritable { get; set; }
         public int? Page { get; set; }
         public int? Limit { get; set; }

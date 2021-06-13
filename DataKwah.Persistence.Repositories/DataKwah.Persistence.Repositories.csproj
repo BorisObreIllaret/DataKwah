@@ -5,9 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DataKwah.Core.Extensions\DataKwah.Core.Extensions.csproj"/>
-        <ProjectReference Include="..\DataKwah.Core.Filter\DataKwah.Core.Filter.csproj"/>
-        <ProjectReference Include="..\DataKwah.Persistence\DataKwah.Persistence.csproj"/>
+        <ProjectReference Include="..\DataKwah.Core.Extensions\DataKwah.Core.Extensions.csproj" />
+        <ProjectReference Include="..\DataKwah.Core.Filter\DataKwah.Core.Filter.csproj" />
+        <ProjectReference Include="..\DataKwah.Persistence\DataKwah.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

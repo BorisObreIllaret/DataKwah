@@ -1,0 +1,81 @@
+<div class="title-row">
+  <h2>Details of product: {{ productLabel || '-' }}</h2>
+  <button pButton pRipple type="button" icon="pi pi-arrow-left" class="p-button-rounded" routerLink="/home"></button>
+</div>
+<p-card header="Review list">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="right">
+      <form>
+        <input type="text" name="search" pInputText placeholder="Search" [(ngModel)]="search">
+        <button pButton type="button" icon="pi pi-filter" (click)="onSearch()"></button>
+      </form>
+    </ng-template>
+  </p-toolbar>
+  <p-table [value]="reviews"
+           [lazy]="true"
+           (onLazyLoad)="loadReviews($event)"
+           [loading]="loading"
+           [paginator]="true"
+           [showCurrentPageReport]="true"
+           [(first)]="first"
+           [rows]="rows"
+           [totalRecords]="count"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [rowsPerPageOptions]="[10,25,50]"
+           selectionMode="single"
+           [(selection)]="selectedReview"
+           dataKey="id"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="asin">ASIN
+          <p-sortIcon field="asin"></p-sortIcon>
+        </th>
+        <th pSortableColumn="title">Title
+          <p-sortIcon field="title"></p-sortIcon>
+        </th>
+        <th pSortableColumn="rating">Rating
+          <p-sortIcon field="rating"></p-sortIcon>
+        </th>
+        <th pSortableColumn="date">Date
+          <p-sortIcon field="date"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-review>
+      <tr [pSelectableRow]="review">
+        <td>{{ review.asin }}</td>
+        <td>{{ review.title }}</td>
+        <td>
+          <p-rating [ngModel]="review.rating" [readonly]="true" [cancel]="false"></p-rating>
+        </td>
+        <td>{{ review.date | date }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+<div class="spacer"></div>
+<p-card header="Review details" *ngIf="selectedReview">
+  <div class="product-details">
+    <div class="form-row">
+      <span class="p-float-label">
+        <input id="review-title" type="text" pInputText [value]="selectedReview.title" readonly>
+        <label for="review-title">Title</label>
+      </span>
+      <span class="p-float-label">
+        <input id="review-date" type="text" pInputText [value]="selectedReview.date | date" readonly>
+        <label for="review-date">Title</label>
+      </span>
+      <span class="p-float-label">
+        <p-rating id="review-rating" [ngModel]="selectedReview.rating" [readonly]="true" [cancel]="false"></p-rating>
+        <label for="review-rating" class="float-label">Rating</label>
+      </span>
+    </div>
+    <div class="form-row">
+      <span class="p-float-label">
+        <textarea id="review-body" pInputTextarea readonly [cols]="80"  [autoResize]="true">{{ selectedReview.body }}</textarea>
+        <label for="review-body">Body</label>
+      </span>
+    </div>
+  </div>
+</p-card>

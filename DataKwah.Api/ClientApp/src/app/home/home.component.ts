@@ -12,12 +12,15 @@ import {IndexManyProductsRequest} from '../models/index-many-products-request.mo
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
   products: ProductFilterResponseData[] = [];
   count: number = 0;
   dialogVisible = false;
   first = 0;
   rows = 10;
+  page = 0;
+  search = '';
+  sort = '';
+  isAscendingOrder = true;
   loading = true;
   newASIN = '';
   newASINs: {asin: string}[] = [{asin: ''}];
@@ -27,13 +30,16 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterProducts(0, this.rows, '', true, '');
+    this.filterProducts(this.page, this.rows, this.sort , this.isAscendingOrder, this.search);
   }
 
   loadProducts(event: any) {
     this.first = event.first;
     this.rows = event.rows;
-    this.filterProducts(event.first / event.rows, event.rows, event.sortField, !!event.sortOrder, '');
+    this.page = event.first / event.rows;
+    this.sort = event.sortField;
+    this.isAscendingOrder = event.sortOrder > 0;
+    this.filterProducts(this.page, this.rows, this.sort , this.isAscendingOrder, this.search);
   }
 
   private filterProducts(page: number, limit: number, sort: string, ascendingOrder: boolean, search: string): void {
@@ -48,11 +54,7 @@ export class HomeComponent implements OnInit {
       this.products = response.items;
       this.count = response.count;
       this.loading = false;
-    })
-  }
-
-  viewDetail(product: ProductFilterResponseData) {
-
+    });
   }
 
   addNew() {
@@ -88,8 +90,7 @@ export class HomeComponent implements OnInit {
         summary,
       });
 
-      this.filterProducts(0, this.rows, '', true, '');
-
+      this.filterProducts(this.page, this.rows, this.sort , this.isAscendingOrder, this.search);
       this.newASIN = '';
     });
   }
@@ -118,5 +119,10 @@ export class HomeComponent implements OnInit {
         this.dialogVisible = false;
       }
     )
+  }
+
+  onSearch() {
+    this.loading = true;
+    this.filterProducts(this.page, this.rows, this.sort , this.isAscendingOrder, this.search);
   }
 }

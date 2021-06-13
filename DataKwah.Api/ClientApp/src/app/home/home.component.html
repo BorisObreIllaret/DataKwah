@@ -1,11 +1,17 @@
-<h1>List of indexed products</h1>
-<div class="card">
+<h1>Amazon indexed products</h1>
+<p-card header="Products list">
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-      <form #asinForm="ngForm">
+      <form>
         <input type="text" name="newAsin" pInputText placeholder="Enter an ASIN" [(ngModel)]="newASIN">
         <button pButton type="button" icon="pi pi-plus" (click)="addNew()"></button>
         <button pButton pRipple label="Add ASINs" icon="pi pi-plus" class="p-mr-2 ml-1" (click)="openDialog()"></button>
+      </form>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <form>
+        <input type="text" name="search" pInputText placeholder="Search" [(ngModel)]="search">
+        <button pButton type="button" icon="pi pi-filter" (click)="onSearch()"></button>
       </form>
     </ng-template>
   </p-toolbar>
@@ -20,7 +26,7 @@
            [rows]="rows"
            [totalRecords]="count"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-           [rowsPerPageOptions]="[5,10,25,50]"
+           [rowsPerPageOptions]="[10,25,50]"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -36,15 +42,15 @@
         <td>{{ product.label }}</td>
         <td [innerHTML]="product.state | toStateIcon"></td>
         <td>
-          <button pButton pRipple icon="pi pi-search" class="p-button-rounded p-button-success p-mr-2"
-                  (click)="viewDetail(product)"></button>
+          <button pButton pRipple icon="pi pi-search" class="p-button-rounded p-button p-mr-2"
+                  [routerLink]="['/product', product.id]"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
-</div>
+</p-card>
 <p-dialog header="Add ASINs" [(visible)]="dialogVisible">
-  <form #asinsForm="ngForm" class="asins-form">
+  <form class="asins-form">
     <div *ngFor="let item of newASINs; let i = index; let isLast = last">
       <input type="text" [name]="'newAsin' + i" pInputText placeholder="Enter an ASIN" [(ngModel)]="item.asin">
       <button pButton type="button" icon="pi pi-plus" (click)="addNewAsinInList()" *ngIf="isLast"></button>

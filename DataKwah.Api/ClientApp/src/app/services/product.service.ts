@@ -9,6 +9,8 @@ import {IndexOneProductRequest} from '../models/index-one-product-request.model'
 import {IndexOneProductResponse} from '../models/index-one-product-response.model';
 import {IndexManyProductsRequest} from '../models/index-many-products-request.model';
 import {IndexManyProductsResponse} from '../models/index-many-products-response.model';
+import {ProductDetailsRequest} from '../models/product-details-request.model';
+import {ProductDetailsResponse} from '../models/product-details-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,12 @@ export class ProductService {
   filterProducts(request: ProductFilterRequest): Observable<ProductFilterResponse> {
     const params = this.buildQueryStringParams(request);
     return this.http.get<ProductFilterResponse>(`${this.basePath}/filter`, {params});
+  }
+
+  productDetails(request: ProductDetailsRequest): Observable<ProductDetailsResponse> {
+    let params = this.buildQueryStringParams(request);
+    params = params.set('productId', request.productId);
+    return this.http.get<ProductDetailsResponse>(`${this.basePath}/details`, {params});
   }
 
   addProduct(request: IndexOneProductRequest): Observable<IndexOneProductResponse>  {
@@ -47,7 +55,7 @@ export class ProductService {
       params = params.set('sort', request.sort);
     }
 
-    if (request.ascendingOrder) {
+    if (request.ascendingOrder !== null && request.ascendingOrder !== undefined) {
       params = params.set('ascendingOrder', request.ascendingOrder);
     }
 

@@ -1,0 +1,35 @@
+.title-row {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  button {
+    margin-left: 2rem;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-flow: row wrap;
+
+  span {
+    margin: 1rem;
+  }
+}
+
+.product-details {
+  margin: 2rem 0;
+}
+
+.float-label {
+  top: -.75rem;
+  font-size: 12px;
+}
+
+:host ::ng-deep .p-rating {
+  margin-top: 0.5rem;
+}
+
+.spacer {
+  margin-top: 2rem;
+}

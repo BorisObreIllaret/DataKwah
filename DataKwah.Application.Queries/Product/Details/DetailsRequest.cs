@@ -1,12 +1,11 @@
 ﻿using DataKwah.Core.Filter;
+using MediatR;
 
-namespace DataKwah.Persistence.Repositories.Product
+namespace DataKwah.Application.Queries.Product.Details
 {
-    public class ProductQueryObject : IFilterRequest
+    public class DetailsRequest : IRequest<DetailsResponse>, IFilterRequest
     {
-        public bool IncludeReviews { get; set; }
-        public bool IncludeState { get; set; }
-        public bool UseWritable { get; set; }
+        public int ProductId { get; set; }
         public int? Page { get; set; }
         public int? Limit { get; set; }
         public string Sort { get; set; }
